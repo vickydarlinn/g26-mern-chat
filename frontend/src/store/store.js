@@ -5,18 +5,23 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "./apis/authApi";
 import { chatApi } from "./apis/chatsApi";
 import { usersApi } from "./apis/usersApi";
+import { messageApi } from "./apis/messageApi";
+import { chatSliceReducer } from "./slices/chatSlice";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [messageApi.reducerPath]: messageApi.reducer,
+    chat: chatSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       chatApi.middleware,
-      usersApi.middleware
+      usersApi.middleware,
+      messageApi.middleware
     ),
 });
 
@@ -30,3 +35,4 @@ export {
   useFetchChatsQuery,
   useCreateGroupChatMutation,
 } from "./apis/chatsApi";
+export * from "./slices/chatSlice";

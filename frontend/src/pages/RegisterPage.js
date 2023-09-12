@@ -25,7 +25,9 @@ function RegisterPage() {
     // Handle registration logic here using formData
     try {
       const resp = await registerUserFn(formData);
+      console.log(resp);
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("userId", resp.data.userId);
       return navigate("/chat");
     } catch (error) {
       console.log(error);

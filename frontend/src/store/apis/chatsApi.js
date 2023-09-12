@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const chatApi = createApi({
-  reducerPath: "chats",
+  reducerPath: "chatsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5555/api/v1/chats" }),
   endpoints: (builder) => ({
     fetchChats: builder.query({
@@ -35,6 +35,8 @@ const chatApi = createApi({
       },
     }),
     createGroupChat: builder.mutation({
+      invalidatesTags: ["getAllChats"],
+
       query: (group) => {
         console.log(group);
         return {

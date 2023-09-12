@@ -66,33 +66,12 @@ exports.fetchChats = async (req, res) => {
 
   try {
     // Find all chats where the current user is a member
-    const userChats = await Chat.find({ members: userId }).sort([
-      ["updatedAt", -1], // Sort by updatedAt in descending order
-    ]);
+    let userChats = await Chat.find({ members: userId })
+      .populate("members", "-password")
+      .populate("groupAdmin", "-password")
+      .sort({ updatedAt: -1 });
 
-    // Extract unique user IDs from the chats
-    const chatParticipants = [];
-    userChats.forEach((chat) => {
-      if (!chat.isGroupChat) {
-        chat.members.forEach((memberId) => {
-          if (memberId.toString() !== userId) {
-            chatParticipants.push(memberId);
-          }
-        });
-      }
-    });
-    // write the code for group chat participants
-
-    // Find the usernames of the chat participants
-    const participantsInfo = await User.find({
-      _id: { $in: [...chatParticipants] },
-    }).select("-password");
-
-    // this is unecessary code, If I remove this, so I need to change the frontend path too.
-    // I am here removing the password key, we can do this in more better way too.
-    const chatData = participantsInfo;
-
-    res.status(200).json({ chatData });
+    res.status(200).json({ message: "success", data: userChats });
   } catch (error) {
     console.error("Error fetching chats of this user:", error);
     res

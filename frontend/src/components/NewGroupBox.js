@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import {
   useFetchUsersMutation,
   useCreateGroupChatMutation,
+  setShowCreateGroupBox,
 } from "../store/store";
+import { useDispatch } from "react-redux";
 
 // This functional component represents a dialog box for creating a new group.
-const NewGroupBox = ({ setShowCreateGroupBox }) => {
+const NewGroupBox = () => {
+  const dispatch = useDispatch();
   const [fetchUsersFn] = useFetchUsersMutation(); // Custom hook for fetching users
   const [createGroupChatFn] = useCreateGroupChatMutation(); // Custom hook for creating a group chat
   const [searchQuery, setSearchQuery] = useState(""); // State to store the user's search query
@@ -17,7 +20,7 @@ const NewGroupBox = ({ setShowCreateGroupBox }) => {
   const handleRemoveBox = (e) => {
     // Check if the click event originated from the black overlay (outer div)
     if (e.target.classList.contains("bg-[#00000079]")) {
-      setShowCreateGroupBox(false);
+      dispatch(setShowCreateGroupBox(false));
     }
   };
 
@@ -55,6 +58,8 @@ const NewGroupBox = ({ setShowCreateGroupBox }) => {
     const membersId = groupMembers.map((member) => member._id);
     // Call the createGroupChatFn with the selected members and group name
     createGroupChatFn({ members: membersId, name: groupName });
+    dispatch(setShowCreateGroupBox(false));
+    // Close the dialog box
   };
 
   return (

@@ -35,6 +35,7 @@ exports.loginUser = async (req, res) => {
       token,
       name: userFromDB.name,
       email: userFromDB.email,
+      userId: userFromDB._id,
     });
   } catch (error) {
     res.status(404).json({
@@ -71,6 +72,7 @@ exports.registerUser = async (req, res) => {
       fullName: registeredUser.fullName,
       userName: registeredUser.userName,
       email: registeredUser.email,
+      userId: registeredUser._id,
     });
   } catch (error) {
     res.status(404).json({

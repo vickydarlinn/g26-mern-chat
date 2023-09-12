@@ -12,6 +12,10 @@ const chatSchema = new mongoose.Schema(
         ref: "User", // Reference to the User model
       },
     ],
+    groupAdmin: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Reference to the User model
+    },
     name: {
       type: String,
     },

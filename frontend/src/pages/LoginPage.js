@@ -25,6 +25,8 @@ function LoginPage() {
       const resp = await loginUserFn(credentials);
       console.log(resp.data);
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("userId", resp.data.userId);
+
       return navigate("/chat");
     } catch (error) {
       console.log(error);
