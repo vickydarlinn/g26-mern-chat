@@ -1,10 +1,14 @@
 import React from "react";
+import { setSelectedChat } from "../../store/store";
+import { useDispatch } from "react-redux";
 
 const RecentChatUser = ({ chat }) => {
+  const dispatch = useDispatch();
   const isGroupChat = chat.isGroupChat;
 
-  const handleShowChat = (user) => {
-    console.log(user);
+  const handleShowChat = (chat) => {
+    dispatch(setSelectedChat(chat));
+    console.log(chat);
   };
 
   const chatName = isGroupChat

@@ -17,8 +17,24 @@ const messageApi = createApi({
         };
       },
     }),
+    sendMessage: builder.mutation({
+      query: (messageInfo) => {
+        return {
+          url: `/`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: {
+            sender: messageInfo.userId,
+            content: messageInfo.message,
+            chat: messageInfo.chatId,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useFetchMessagesQuery } = messageApi;
+export const { useFetchMessagesQuery, useSendMessageMutation } = messageApi;
 export { messageApi };

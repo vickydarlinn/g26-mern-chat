@@ -35,4 +35,10 @@ export {
   useFetchChatsQuery,
   useCreateGroupChatMutation,
 } from "./apis/chatsApi";
+
+export {
+  useSendMessageMutation,
+  useFetchMessagesQuery,
+} from "./apis/messageApi";
+
 export * from "./slices/chatSlice";

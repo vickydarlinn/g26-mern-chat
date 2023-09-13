@@ -6,13 +6,24 @@ import NewGroupBox from "../components/NewGroupBox";
 import { useSelector } from "react-redux";
 
 const ChatPage = () => {
-  const { showCreateGroupBox } = useSelector((state) => state.chat);
+  const { showCreateGroupBox, selectedChat } = useSelector(
+    (state) => state.chat
+  );
   return (
     <div className="flex gap-1 relative">
       <ChatParticipants />
-      <div className="bg-[#193D3D] text-white grow">
-        <ChatWindow />
-        <ChatBox />
+      <div className="bg-[#193D3D] text-white grow relative">
+        {selectedChat ? (
+          <>
+            <ChatWindow />
+            <ChatBox />
+          </>
+        ) : (
+          <div className="absolute left-0 top-0 w-full h-full bg-black/50 flex justify-center items-center">
+            Click on user to chat with the user
+          </div>
+        )}
+
         {showCreateGroupBox && <NewGroupBox />}
       </div>
     </div>

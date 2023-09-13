@@ -5,6 +5,7 @@ const app = express();
 const authenticationRoute = require("./routes/authenticationRouter");
 const chatRoute = require("./routes/chatRouter");
 const userRoute = require("./routes/userRouter");
+const messageRoute = require("./routes/messageRouter");
 const db = require("./utils/db");
 
 dotenv.config();
@@ -18,6 +19,7 @@ db();
 app.use("/api/v1/auth", authenticationRoute);
 app.use("/api/v1/chats", chatRoute);
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/messages", messageRoute);
 
 app.listen(port, () => {
   console.log(`server is listening on ${port}`);
