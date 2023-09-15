@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ChatParticipants from "../components/chatBar/ChatParticipants";
 import ChatWindow from "../components/chatBody/ChatWindow";
 import ChatBox from "../components/chatFooter/ChatBox";
 import NewGroupBox from "../components/NewGroupBox";
 import { useSelector } from "react-redux";
+import socketIo from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { setSocket } from "../store/store";
+
+const socket = socketIo.connect("http://localhost:5555");
 
 const ChatPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSocket(socket));
+  }, [dispatch]);
   const { showCreateGroupBox, selectedChat } = useSelector(
     (state) => state.chat
   );

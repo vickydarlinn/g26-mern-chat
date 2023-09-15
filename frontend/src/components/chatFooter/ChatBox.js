@@ -4,16 +4,20 @@ import { useSendMessageMutation } from "../../store/store";
 
 const ChatBox = () => {
   const [sendMessageFn] = useSendMessageMutation();
-  const { selectedChat } = useSelector((state) => state.chat);
+  const { selectedChat, socket } = useSelector((state) => state.chat);
   const [message, setMessage] = useState("");
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    console.log(message);
-    await sendMessageFn({
+    const data = {
       userId: localStorage.getItem("userId"),
       message,
       chatId: selectedChat._id,
-    });
+    };
+    await sendMessageFn(data);
+    socket.emit("new message", data);
+
+    // setMessage([...messages, data]);
     setMessage("");
   };
   return (

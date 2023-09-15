@@ -1,14 +1,16 @@
 import React from "react";
 import { setSelectedChat } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const RecentChatUser = ({ chat }) => {
+  const { socket } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const isGroupChat = chat.isGroupChat;
 
   const handleShowChat = (chat) => {
     dispatch(setSelectedChat(chat));
     console.log(chat);
+    socket.emit("chatRoom", chat._id);
   };
 
   const chatName = isGroupChat

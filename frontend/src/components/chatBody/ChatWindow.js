@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useFetchMessagesQuery } from "../../store/store";
+// import { useDispatch } from "react-redux";
 
 const ChatWindow = () => {
+  const { socket } = useSelector((state) => state.chat);
+  const [allMessages, setAllMessages] = useState([]);
   const { selectedChat } = useSelector((state) => state.chat);
   const { data: messages } = useFetchMessagesQuery(selectedChat._id);
-  console.log(messages);
+
+  useEffect(() => {
+    socket.on("new recieved message", (message) => {
+      console.log(message);
+      setAllMessages((prevMessages) => {
+        const newMessage = {
+          sender: {
+            _id: message.userId,
+          },
+          chat: {
+            _id: message.chatId,
+          },
+          content: message.message,
+        };
+
+        return [...prevMessages, newMessage];
+      });
+    });
+  }, [socket]);
+  console.log(allMessages);
+
+  useEffect(() => {
+    setAllMessages(messages?.data);
+  }, [messages]);
+
   const chatName = selectedChat.isGroupChat
     ? selectedChat.name
     : selectedChat.members.find(
@@ -22,7 +49,7 @@ const ChatWindow = () => {
       </header>
       <div className="bg-[#102526] h-[80vh] flex flex-col p-4 gap-2 overflow-auto ">
         {selectedChat.isGroupChat
-          ? messages?.data?.map((message) => {
+          ? allMessages?.map((message) => {
               if (message.sender._id === localStorage.getItem("userId")) {
                 return (
                   <div
@@ -47,7 +74,7 @@ const ChatWindow = () => {
                 );
               }
             })
-          : messages?.data?.map((message) => {
+          : allMessages?.map((message) => {
               if (message.sender._id === localStorage.getItem("userId")) {
                 return (
                   <span

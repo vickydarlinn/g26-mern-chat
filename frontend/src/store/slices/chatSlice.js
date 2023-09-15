@@ -5,6 +5,7 @@ const chatSlice = createSlice({
   initialState: {
     showCreateGroupBox: false,
     selectedChat: null,
+    socket: null,
   },
   reducers: {
     setShowCreateGroupBox: (state, action) => {
@@ -13,8 +14,12 @@ const chatSlice = createSlice({
     setSelectedChat: (state, action) => {
       state.selectedChat = action.payload;
     },
+    setSocket: (state, action) => {
+      state.socket = action.payload;
+    },
   },
 });
 
 export const chatSliceReducer = chatSlice.reducer;
-export const { setShowCreateGroupBox, setSelectedChat } = chatSlice.actions;
+export const { setShowCreateGroupBox, setSelectedChat, setSocket } =
+  chatSlice.actions;
