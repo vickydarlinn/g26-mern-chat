@@ -1,5 +1,4 @@
 const Chat = require("../models/chatModel"); // Import the Chat model
-const User = require("../models/userModel"); // Import the User model
 
 // Controller function to create a chat
 exports.createChat = async (req, res) => {
@@ -26,6 +25,7 @@ exports.createChat = async (req, res) => {
         members,
         name,
         groupAdmin,
+        lastMessage: null,
       });
       const savedChat = await newChat.save();
       return res.status(201).json(savedChat);
@@ -69,6 +69,10 @@ exports.fetchChats = async (req, res) => {
     let userChats = await Chat.find({ members: userId })
       .populate("members", "-password")
       .populate("groupAdmin", "-password")
+      .populate({
+        path: "lastMessage",
+        populate: { path: "sender", select: "-password" },
+      })
       .sort({ updatedAt: -1 });
 
     res.status(200).json({ message: "success", data: userChats });

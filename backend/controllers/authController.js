@@ -36,6 +36,7 @@ exports.loginUser = async (req, res) => {
       name: userFromDB.name,
       email: userFromDB.email,
       userId: userFromDB._id,
+      userName: userFromDB.userName,
     });
   } catch (error) {
     res.status(404).json({

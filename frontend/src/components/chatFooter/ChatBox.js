@@ -11,8 +11,10 @@ const ChatBox = () => {
     e.preventDefault();
     const data = {
       userId: localStorage.getItem("userId"),
+
       message,
       chatId: selectedChat._id,
+      userName: localStorage.getItem("userName"),
     };
     await sendMessageFn(data);
     socket.emit("new message", data);

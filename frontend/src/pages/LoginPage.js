@@ -26,6 +26,7 @@ function LoginPage() {
       console.log(resp.data);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
+      localStorage.setItem("userName", resp.data.userName);
 
       return navigate("/chat");
     } catch (error) {

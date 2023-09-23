@@ -28,6 +28,8 @@ function RegisterPage() {
       console.log(resp);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
+      localStorage.setItem("userName", resp.data.userName);
+
       return navigate("/chat");
     } catch (error) {
       console.log(error);

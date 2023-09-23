@@ -16,6 +16,7 @@ const ChatWindow = () => {
         const newMessage = {
           sender: {
             _id: message.userId,
+            userName: message.userName,
           },
           chat: {
             _id: message.chatId,
@@ -61,6 +62,7 @@ const ChatWindow = () => {
                   </div>
                 );
               } else {
+                console.log(message);
                 return (
                   <div
                     key={message._id}

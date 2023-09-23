@@ -18,6 +18,16 @@ const RecentChatUser = ({ chat }) => {
     : chat.members.find(
         (member) => member._id !== localStorage.getItem("userId")
       ).userName;
+
+  const lastMessageContent = chat.lastMessage ? chat.lastMessage.content : "";
+  // const lastMessageSenderName = chat.lastMessage
+  //   ? chat.lastMessage.sender.userName
+  //   : "";
+  const lastMessageSenderName =
+    chat?.lastMessage?.sender._id === localStorage.getItem("userId")
+      ? "You"
+      : chat?.lastMessage?.sender.userName;
+
   return (
     <div
       onClick={() => handleShowChat(chat)}
@@ -25,6 +35,10 @@ const RecentChatUser = ({ chat }) => {
       className="cursor-pointer bg-green-900 p-2 rounded-lg text-xl font-bold m-1 capitalize"
     >
       {chatName}
+      <div>
+        <span className="text-sm font-bold">{lastMessageSenderName}:</span>{" "}
+        <span className="text-sm font-medium">{lastMessageContent}</span>
+      </div>
     </div>
   );
 };

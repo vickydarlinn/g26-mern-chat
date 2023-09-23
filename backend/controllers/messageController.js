@@ -1,4 +1,5 @@
 const Message = require("../models/messageModel");
+const Chat = require("../models/chatModel");
 
 // Controller function to get all message of  a chat
 exports.fetchMessages = async (req, res) => {
@@ -27,6 +28,9 @@ exports.createMessage = async (req, res) => {
       content,
       chat,
     });
+    // Update the lastMessage field in the chat document
+    await Chat.findByIdAndUpdate(chat, { lastMessage: message._id });
+
     const savedMessage = await message.save();
     res
       .status(200)
