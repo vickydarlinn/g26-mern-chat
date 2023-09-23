@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const messageApi = createApi({
   reducerPath: "messagesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5555/api/v1/messages",
+    baseUrl: "https://g26-mern-chat-api.onrender.com/api/v1/messages",
   }),
   endpoints: (builder) => ({
     fetchMessages: builder.query({

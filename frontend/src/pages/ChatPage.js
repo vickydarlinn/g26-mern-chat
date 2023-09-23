@@ -8,7 +8,7 @@ import socketIo from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { setSocket } from "../store/store";
 
-const socket = socketIo.connect("http://localhost:5555");
+const socket = socketIo.connect("https://g26-mern-chat-api.onrender.com");
 
 const ChatPage = () => {
   const dispatch = useDispatch();

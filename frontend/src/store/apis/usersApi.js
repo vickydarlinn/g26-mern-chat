@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5555/api/v1/users" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://g26-mern-chat-api.onrender.com/api/v1/users",
+  }),
   endpoints: (builder) => ({
     fetchUsers: builder.mutation({
       query: (searchedUser) => {
