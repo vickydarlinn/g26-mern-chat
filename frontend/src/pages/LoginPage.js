@@ -9,6 +9,7 @@ function LoginPage() {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,8 +23,9 @@ function LoginPage() {
     e.preventDefault();
     // Handle login logic here using credentials.email and credentials.password
     try {
+      setIsLoading(true);
       const resp = await loginUserFn(credentials);
-      console.log(resp.data);
+      setIsLoading(false);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("userId", resp.data.userId);
       localStorage.setItem("userName", resp.data.userName);
@@ -32,6 +34,14 @@ function LoginPage() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleLoginAsGuest = () => {
+    // Fill in the email and password fields with guest credentials
+    setCredentials({
+      email: "vicky@gmail.com",
+      password: "123456",
+    });
   };
 
   return (
@@ -76,14 +86,31 @@ function LoginPage() {
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            } text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
             type="submit"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+          <button
+            className={`${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600"
+            } text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+            type="button"
+            onClick={handleLoginAsGuest}
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging in..." : "Login as a Guest"}
           </button>
         </div>
         <p>
-          Account doest not exist? <Link to="/register">Create here</Link>
+          Account doesn't exist? <Link to="/register">Create here</Link>
         </p>
       </form>
     </div>

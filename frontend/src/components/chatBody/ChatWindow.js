@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { useFetchMessagesQuery } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 
 const ChatWindow = () => {
+  const navigate = useNavigate();
   const { socket } = useSelector((state) => state.chat);
   const [allMessages, setAllMessages] = useState([]);
   const { selectedChat } = useSelector((state) => state.chat);
   const { data: messages } = useFetchMessagesQuery(selectedChat._id);
+
+  const handleLogout = () => {
+    navigate("/");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+  };
 
   useEffect(() => {
     socket.on("new recieved message", (message) => {
@@ -44,7 +54,10 @@ const ChatWindow = () => {
     <div className=" ">
       <header className="flex items-center justify-between px-5 h-[10vh] ">
         <span className="font-bold text-xl capitalize">{chatName}</span>
-        <button className="p-2 w-36 bg-orange-600 text-white cursor-pointer">
+        <button
+          onClick={handleLogout}
+          className="p-2 w-36 bg-orange-600 text-white cursor-pointer"
+        >
           Log Out
         </button>
       </header>
